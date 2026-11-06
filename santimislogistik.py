@@ -19,4 +19,14 @@ def koordinaatide_leidja(aadressid): #Muudab kasutaja poolt sisestatud aadressid
     return koordinaadid
 
 
-def asukohtade_vahemaad(koordinaadid): #OSRM kaarditeenuselt asukohtade vahemaa pärimine
+def asukohtade_vahemaad(koordinaadid): #OSRM kaarditeenuselt asukohtade vahemaa pärimine. Tagastab Vahemaa iga punkti vahel
+
+
+
+def marsruudi_arvutaja(koordinaadid, vahemaad): #Leiab itertools mooduli permutatsioonide abil lühima marsruudi, katsetades kõik läbi. Tagastab õige aadresside järjestuse ning vahemaa.
+
+
+
+def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms.
+    #Esimene aadress, mis sisestatakse on alg ja lõpp punkt.
+    kasutaja_aadressid = input() ### Kas võtta vastu kõik aadressid korraga, või küsida ükshaaval, või üldse tekstifailina
