@@ -82,18 +82,58 @@ def marsruudi_arvutaja(koordinaadid, vahemaad): #Leiab itertools mooduli permuta
     return parimad_koordinaadid, vähim_vahemaa
 
 
-def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms.
+def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms).
+    
+    kodu_aadress = input("Sisesta aadress, kust santimist alustad ja lõpetad kujul tänav, majanumber, linn (nt Riia 2, Tartu): ")
+    kodu = geolokaator.geocode(kodu_aadress)
+    if not kodu:
+        print("Sisestatud aadressi ei leitud.")
+        return
+        
+        
+    aadressid = []
 
-    #Esimene aadress, mis sisestatakse on alg ja lõpp punkt.
-    kasutaja_aadressid = ["Raekoja plats 1, Tartu",
-        "Ülikooli 18, Tartu",
-        "Vanemuise 46, Tartu",
-        "Narva mnt 27, Tartu", "Ringtee 75, Tartu"]
+    while True:
+        aadress_sisend = input("Sisesta aadress kujul tänav, majanumber, linn (nt Riia 1, Tartu), lõpetamiseks kirjuta 'lõpp': ")
 
-    koordinaadid = koordinaatide_leidja(kasutaja_aadressid)
+        if aadress_sisend.lower() == "lõpp": #lower teeb kasutaja sisestatud sõna väiketähtedega sõnaks
+            break
+
+        aadressid.append(aadress_sisend)
+    
+    if len(aadressid) == 0:
+        print("Ühtegi külastatavat aadressi ei sisestatud.")
+        return
+
+    aadressid.insert(0, kodu_aadress) #lisab koduaadressi listi algusesse
+    
+
+    koordinaadid = koordinaatide_leidja(aadressid)
     vahemaad = asukohtade_vahemaad(koordinaadid)
-    parimad_koordinaadid, vähim_vahemaa = marsruudi_arvutaja(koordinaadid, vahemaad)
-    print(parimad_koordinaadid)
-    print(vähim_vahemaa)
 
-main()
+    parimad_koordinaadid, vähim_vahemaa = marsruudi_arvutaja(koordinaadid,vahemaad)
+
+    print("\nParim marsruut:")
+    print("-" * 40) #kriipsude rida vahele
+
+    for i in range(len(parimad_koordinaadid)):
+
+        print(f"{i + 1}. {parimad_koordinaadid[i][0]}") #prindib aadressi
+
+
+        if i < len(parimad_koordinaadid) - 1: #kontrollib, kas tegu on viimase punktiga
+
+            indeks1 = koordinaadid.index(parimad_koordinaadid[i])
+            indeks2 = koordinaadid.index(parimad_koordinaadid[i + 1])
+
+            vahemaa = round(vahemaad[indeks1][indeks2])
+
+            print(f"   ↓ {vahemaa} m") #prindib järgmise punktini mineku vahemaa
+
+    print("-" * 40)
+    print(f"Kogu marsruudi pikkus: {round(vähim_vahemaa)} m")
+    
+if __name__ == "__main__":
+    main()
+    
+    
