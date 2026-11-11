@@ -128,10 +128,19 @@ def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms).
 
             vahemaa = round(vahemaad[indeks1][indeks2])
 
-            print(f"   ↓ {vahemaa} m") #prindib järgmise punktini mineku vahemaa
+            if vahemaa > 1000:
+                vahemaa /= 1000
+                vahemaa = round(vahemaa, 1)
+                print(f"   ↓ {vahemaa} km")
+            else:
+                print(f"   ↓ {vahemaa} m") #prindib järgmise punktini mineku vahemaa
 
     print("-" * 40)
-    print(f"Kogu marsruudi pikkus: {round(vähim_vahemaa)} m")
+    if vähim_vahemaa > 1000:
+        vähim_vahemaa /= 1000
+        print(f"Kogu marsruudi pikkus: {round(vähim_vahemaa)} km")
+    else:
+        print(f"Kogu marsruudi pikkus: {round(vähim_vahemaa)} m")
     
 if __name__ == "__main__":
     main()
