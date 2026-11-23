@@ -82,6 +82,17 @@ def marsruudi_arvutaja(koordinaadid, vahemaad): #Leiab itertools mooduli permuta
     return parimad_koordinaadid, vähim_vahemaa
 
 
+def google_maps_link(parimad_koordinaadid): #Võtab parima marsruudi koordinaadid ning annab google maps marsruudi
+    koordinaadid = []
+    for i in parimad_koordinaadid:
+        longitude = i[1]
+        latitude = i[2]
+        koordinaadid.append(f"{latitude},{longitude}")
+
+    teekond = "/".join(koordinaadid)
+    return f"https://www.google.com/maps/dir/{teekond}"
+
+
 def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms).
     
     kodu_aadress = input("Sisesta aadress, kust santimist alustad ja lõpetad kujul tänav, majanumber, linn (nt Riia 2, Tartu): ")
@@ -97,6 +108,7 @@ def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms).
         aadress_sisend = input("Sisesta aadress kujul tänav, majanumber, linn (nt Riia 1, Tartu), lõpetamiseks kirjuta 'lõpp': ")
 
         if aadress_sisend.lower() == "lõpp": #lower teeb kasutaja sisestatud sõna väiketähtedega sõnaks
+            print("Leian marsruudi...")
             break
 
         aadressid.append(aadress_sisend)
@@ -113,7 +125,7 @@ def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms).
 
     parimad_koordinaadid, vähim_vahemaa = marsruudi_arvutaja(koordinaadid,vahemaad)
 
-    print("\nParim marsruut:")
+    print("\nParim marsruut ligikaudsete vahemaadega:")
     print("-" * 40) #kriipsude rida vahele
 
     for i in range(len(parimad_koordinaadid)):
@@ -133,6 +145,7 @@ def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms).
                 vahemaa = round(vahemaa, 1)
                 print(f"   ↓ {vahemaa} km")
             else:
+                vahemaa = int(round(vahemaa / 50) * 50)
                 print(f"   ↓ {vahemaa} m") #prindib järgmise punktini mineku vahemaa
 
     print("-" * 40)
@@ -141,6 +154,8 @@ def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms).
         print(f"Kogu marsruudi pikkus: {round(vähim_vahemaa)} km")
     else:
         print(f"Kogu marsruudi pikkus: {round(vähim_vahemaa)} m")
+
+    print(f"Marsruut Google Mapsis: {google_maps_link(parimad_koordinaadid)}")
     
 if __name__ == "__main__":
     main()
