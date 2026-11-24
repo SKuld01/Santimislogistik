@@ -103,15 +103,21 @@ def main(): #Programmi põhiosa (kasutaja sisestused, programmi vastused jms).
         
         
     aadressid = []
-
+    
+    
+    print("Maksimaalne aadresside arv on 8!")
     while True:
         aadress_sisend = input("Sisesta aadress kujul tänav, majanumber, linn (nt Riia 1, Tartu), lõpetamiseks kirjuta 'lõpp': ")
 
         if aadress_sisend.lower() == "lõpp": #lower teeb kasutaja sisestatud sõna väiketähtedega sõnaks
             print("Leian marsruudi...")
             break
-
+        
         aadressid.append(aadress_sisend)
+
+        if len(aadressid) == 8:
+            print("Leian marsruudi...")
+            break
     
     if len(aadressid) == 0:
         print("Ühtegi külastatavat aadressi ei sisestatud.")
